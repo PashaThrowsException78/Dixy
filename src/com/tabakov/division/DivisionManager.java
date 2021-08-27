@@ -4,9 +4,7 @@ import com.tabakov.exception.InvalidDivisionCodeException;
 import com.tabakov.util.DivisionValidator;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class DivisionManager {
 
@@ -22,14 +20,6 @@ public class DivisionManager {
         return divisions;
     }
 
-    public void setDivisions(ArrayList<String> divisions) {
-        for(String division : divisions) {
-            addDivision(division);
-        }
-        isSorted = false;
-        this.divisions = divisions;
-    }
-
     public void addDivision(String division) {
         if (!DivisionValidator.isValidDivision(division)) {
             try {
@@ -37,7 +27,7 @@ public class DivisionManager {
             } catch (InvalidDivisionCodeException e) {
                 e.printStackTrace();
             }
-        } else if (isAlreadyExists(division)) {
+        } else if (isDivisionAlreadyExists(division)) {
             return;
         } else {
             isSorted = false;
@@ -55,13 +45,30 @@ public class DivisionManager {
         return isSorted;
     }
 
+    // ToDo
     public void sortDivisions() {
         extractAllDivisionCases();
-        // Now division list includes all divisions cases without repeats, so we can sort them
+        // Now divisionList includes all divisions cases without repeats, so we can start sorting
 
+        for(int i = 0; i < divisions.size() - 1; i++) {
+            for(int j = 0; j < divisions.size() - i - 1; j++) {
+                if (requiredToBeRight(divisions.get(j), divisions.get(j+1)).equals(divisions.get(j))) {
+                    String t = divisions.get(j);
+                    divisions.set(j, divisions.get(j+1));
+                    divisions.set(j+1, t);
+                }
+            }
+        }
+
+        isSorted = true;
     }
 
-    private boolean isAlreadyExists(String division) {
+    public void clear() {
+        isSorted = false;
+        this.divisions.clear();
+    }
+
+    private boolean isDivisionAlreadyExists(String division) {
         for(String d : divisions) {
             if(d.equals(division)) {
                 return true;
@@ -102,5 +109,45 @@ public class DivisionManager {
             subDivisions.add(stringBuilder.toString());
         }
         return subDivisions;
+    }
+
+    // This is exotic realization of "max()" method: we have to compare 2
+    // string with our own rule, like it's numbers
+    private String requiredToBeRight(String div1, String div2) {
+        int num1 = Integer.parseInt(div1.replaceAll("\\D+",""));
+        int num2 = Integer.parseInt(div2.replaceAll("\\D+",""));
+
+        List<Integer> nums1 = new ArrayList<>();
+        List<Integer> nums2 = new ArrayList<>();
+
+        while((num1 > 0) && (num2 > 0)) {
+            nums1.add(num1%10);
+            nums2.add(num2%10);
+            num1/=10;
+            num2/=10;
+        }
+        Collections.reverse(nums1);
+        Collections.reverse(nums2);
+
+        if(nums1.size() >= nums2.size()) {
+            for(int i = 0; i < nums2.size(); i++) {
+                if(nums1.get(i) > nums2.get(i)) {
+                    return div2;
+                } else if(nums2.get(i) > nums1.get(i)) {
+                    return div1;
+                }
+            }
+            return div1;
+        } else {
+            for(int i = 0; i < nums1.size(); i++) {
+                if(nums1.get(i) > nums2.get(i)) {
+                    return div2;
+                } else if(nums2.get(i) > nums1.get(i)) {
+                    return div1;
+                }
+            }
+            return div2;
+        }
+
     }
 }
