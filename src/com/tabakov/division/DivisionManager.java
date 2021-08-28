@@ -3,8 +3,8 @@ package com.tabakov.division;
 import com.tabakov.exception.InvalidDivisionCodeException;
 import com.tabakov.util.DivisionValidator;
 
-
 import java.util.*;
+
 
 public class DivisionManager {
 
@@ -113,6 +113,7 @@ public class DivisionManager {
 
     // This is exotic realization of "max()" method: we have to compare 2
     // string with our own rule, like it's numbers
+    // Returns string, that sortDivisions() must move right, to complete algorithm
     private String requiredToBeRight(String div1, String div2) {
         int num1 = Integer.parseInt(div1.replaceAll("\\D+",""));
         int num2 = Integer.parseInt(div2.replaceAll("\\D+",""));
@@ -126,6 +127,9 @@ public class DivisionManager {
             num1/=10;
             num2/=10;
         }
+
+        // Now the order of the numbers in ArrayLists is reversed, we have to fix this
+
         Collections.reverse(nums1);
         Collections.reverse(nums2);
 
