@@ -115,6 +115,8 @@ public class DivisionManager {
     // string with our own rule, like it's numbers
     // Returns string, that sortDivisions() must move right, to complete algorithm
     private String requiredToBeRight(String div1, String div2) {
+
+        // Parse only numbers from division
         int num1 = Integer.parseInt(div1.replaceAll("\\D+",""));
         int num2 = Integer.parseInt(div2.replaceAll("\\D+",""));
 
@@ -133,7 +135,10 @@ public class DivisionManager {
         Collections.reverse(nums1);
         Collections.reverse(nums2);
 
+        // If number is longer, potentially it will be right
         if(nums1.size() >= nums2.size()) {
+
+            //But now we compare it digit by digit -- it's strongest rule
             for(int i = 0; i < nums2.size(); i++) {
                 if(nums1.get(i) > nums2.get(i)) {
                     return div2;
