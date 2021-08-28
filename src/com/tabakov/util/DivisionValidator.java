@@ -1,7 +1,7 @@
 package com.tabakov.util;
 
 /**
- * If needed, add regex validation through this class modification
+ * If needed, add division validation through this class modification
  */
 
 public final class DivisionValidator {

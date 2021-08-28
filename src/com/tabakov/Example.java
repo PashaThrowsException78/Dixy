@@ -2,7 +2,7 @@ package com.tabakov;
 
 import com.tabakov.division.DivisionManager;
 
-public class Main {
+public class Example {
 
     public static void main(String[] args) {
         DivisionManager manager = new DivisionManager();

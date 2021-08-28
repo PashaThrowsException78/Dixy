@@ -45,7 +45,6 @@ public class DivisionManager {
         return isSorted;
     }
 
-    // ToDo
     public void sortDivisions() {
         extractAllDivisionCases();
         // Now divisionList includes all divisions cases without repeats, so we can start sorting
@@ -111,9 +110,11 @@ public class DivisionManager {
         return subDivisions;
     }
 
-    // This is exotic realization of "max()" method: we have to compare 2
+    // This method is like exotic realization of "max()" method: we have to compare 2
     // string with our own rule, like it's numbers
-    // Returns string, that sortDivisions() must move right, to complete algorithm
+    // Returns string, that sortDivisions() must move right to complete algorithm
+
+    // ToDo
     private String requiredToBeRight(String div1, String div2) {
 
         // Parse only numbers from division
