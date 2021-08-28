@@ -1,14 +1,14 @@
 package com.tabakov.util;
 
-public final class DivisionValidator {
+/**
+ * If needed, add regex validation through this class modification
+ */
 
-    /**
-     * If needed, add regex validation through this class modification
-     */
+public final class DivisionValidator {
 
     public static final String DIVISION_REGEX = "";
 
     public static boolean isValidDivision(String division) {
-        return true;
+        return true; // return division.matches(DIVISION_REGEX);
     }
 }
